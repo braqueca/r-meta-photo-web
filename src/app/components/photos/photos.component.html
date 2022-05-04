@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <form [formGroup]="photosFilterGroup" (ngSubmit)="search(0, 25)">
+    <div class="row">
+        <div class="form-group col-sm-12 col-md-3">
+            <label for="title">Título de la foto</label>
+            <input id="title" type="text" formControlName="title">
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+            <label for="album-title">Título del album</label>
+            <input id="album-title" type="text" formControlName="albumTitle">
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+            <label for="album-user-email">Email del usuario</label>
+            <input id="album-user-email" type="text" formControlName="userEmail">
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+          <br>
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
+  </form>
+  <div>
+    <div class="table-responsive">
+      <table class="table table-striped table-sm text-left">
+        <thead>
+          <th>id</th>
+          <th>preview</th>
+          <th>album id</th>
+          <th>album title</th>
+          <th>user id</th>
+          <th>username</th>
+          <th>email</th>
+          <th>city</th>
+          <th>company name</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let photo of photos">
+            <td>{{photo.id}}</td>
+            <td><img [src]="photo.thumbnailUrl" [title]="photo.title" class="img-fluid img-thumbnail"
+                style="height:50px;"></td>
+            <td>{{photo.album.id}}</td>
+            <td>{{photo.album.title}}</td>
+            <td>{{photo.album.user.id}}</td>
+            <td>{{photo.album.user.username}}</td>
+            <td>{{photo.album.user.email}}</td>
+            <td>{{photo.album.user.address.city}}</td>
+            <td>{{photo.album.user.company.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator [length]="totalFound" [pageIndex]="pageNumber - 1" [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true" (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
